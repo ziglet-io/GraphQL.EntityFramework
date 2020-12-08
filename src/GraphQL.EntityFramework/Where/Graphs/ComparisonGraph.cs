@@ -19,6 +19,7 @@ class ComparisonGraph :
         AddValue("lessThanOrEqual", null, Comparison.LessThanOrEqual);
         AddValue("like", null, Comparison.Like);
         AddValue("startsWith", null, Comparison.StartsWith);
+        AddValue("matches", null, Comparison.Matches);
     }
 
     public override object? ParseLiteral(IValue value)

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
+using NpgsqlTypes;
 
 namespace GraphQL.EntityFramework
 {
@@ -190,7 +192,7 @@ namespace GraphQL.EntityFramework
             var property = PropertyCache<T>.GetProperty(path);
             Expression expressionBody;
 
-            if (property.PropertyType == typeof(string))
+            if (property.PropertyType == typeof(string) || property.PropertyType == typeof(NpgsqlTsVector))
             {
                 switch (comparison)
                 {
@@ -307,6 +309,9 @@ namespace GraphQL.EntityFramework
                         var indexOfExpression = Expression.Call(left, ReflectionCache.StringIndexOf, valueConstant);
                         var notEqualExpression = Expression.NotEqual(indexOfExpression, ExpressionCache.NegativeOne);
                         return Expression.AndAlso(nullCheck, notEqualExpression);
+                    case Comparison.Matches:
+                        return Expression.Call(null, ReflectionCache.StringMatches, left, Expression.Constant(value,typeof(string)));
+                        
                 }
             }
             else

@@ -17,6 +17,7 @@
         StartsWith,
         EndsWith,
         Contains,
-        Like
+        Like,
+        Matches // Full-text-search
     }
 }

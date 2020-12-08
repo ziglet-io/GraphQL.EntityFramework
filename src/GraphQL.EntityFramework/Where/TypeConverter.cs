@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GraphQL;
+using NpgsqlTypes;
 
 static class TypeConverter
 {
@@ -165,6 +166,11 @@ static class TypeConverter
         if (type == typeof(Guid))
         {
             return Guid.Parse(value);
+        }
+
+        if (type == typeof(NpgsqlTsQuery))
+        {
+            return NpgsqlTsQuery.Parse(value ?? "");
         }
 
         if (type.IsEnum)

@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using NpgsqlTypes;
 
 static class ReflectionCache
 {
@@ -29,6 +30,7 @@ static class ReflectionCache
     static MethodInfo dateTimeOffsetListContains;
     static MethodInfo dateTimeOffsetNullableListContains;
     public static MethodInfo StringLike = typeof(DbFunctionsExtensions).GetMethod("Like", new[] {typeof(DbFunctions), typeof(string), typeof(string)});
+    public static MethodInfo StringMatches = typeof(NpgsqlFullTextSearchLinqExtensions).GetMethod("Matches", new[] {typeof(NpgsqlTsVector), typeof(string)});
     public static MethodInfo StringEqualComparison = typeof(string).GetMethod("Equals", new[] {typeof(string), typeof(string), typeof(StringComparison)});
     public static MethodInfo StringEqual = typeof(string).GetMethod("Equals", new[] {typeof(string), typeof(string)});
     public static MethodInfo StringStartsWithComparison = typeof(string).GetMethod("StartsWith", new[] {typeof(string), typeof(StringComparison)});
