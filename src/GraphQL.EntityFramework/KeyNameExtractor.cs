@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 static class KeyNameExtractor
 {
@@ -23,6 +24,14 @@ static class KeyNameExtractor
                 continue;
             }
 
+#pragma warning disable EF1001
+            var etype = entityType as EntityType;
+            if (etype != null && etype.IsImplicitlyCreatedJoinEntityType)
+            {
+                continue;
+            }
+#pragma warning restore EF1001
+            
             var names = primaryKey.Properties.Select(x => x.Name).ToList();
             keyNames.Add(entityType.ClrType, names);
         }

@@ -4,15 +4,21 @@ using System.Linq;
 using GraphQL.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Navigation = GraphQL.EntityFramework.Navigation;
 
 static class NavigationReader
 {
     public static IReadOnlyDictionary<Type, IReadOnlyList<Navigation>> GetNavigationProperties(IModel model)
     {
+        var types = model.GetEntityTypes();
+
+#pragma warning disable EF1001
         return model
             .GetEntityTypes()
-            .Where(x => !x.IsOwned())
+            .Where(x => !x.IsOwned() && !(x as EntityType)!.IsImplicitlyCreatedJoinEntityType)
             .ToDictionary(x => x.ClrType, GetNavigations);
+#pragma warning restore EF1001
     }
 
     static IReadOnlyList<Navigation> GetNavigations(IEntityType entity)
