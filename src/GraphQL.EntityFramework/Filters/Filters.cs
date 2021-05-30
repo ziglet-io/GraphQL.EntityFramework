@@ -7,15 +7,16 @@ namespace GraphQL.EntityFramework
 {
     #region FiltersSignature
 
+    public delegate bool Filter<in TEntity>(object userContext, TEntity input)
+        where TEntity : class;
+
+    public delegate Task<bool> AsyncFilter<in TEntity>(object userContext, TEntity input)
+        where TEntity : class;
+    
+    #endregion
+
     public class Filters
     {
-        public delegate bool Filter<in TEntity>(object userContext, TEntity input)
-            where TEntity : class;
-
-        public delegate Task<bool> AsyncFilter<in TEntity>(object userContext, TEntity input)
-            where TEntity : class;
-
-        #endregion
 
         public void Add<TEntity>(Filter<TEntity> filter)
             where TEntity : class

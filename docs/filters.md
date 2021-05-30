@@ -26,15 +26,13 @@ Notes:
 <!-- snippet: FiltersSignature -->
 <a id='snippet-filterssignature'></a>
 ```cs
-public class Filters
-{
-    public delegate bool Filter<in TEntity>(object userContext, TEntity input)
-        where TEntity : class;
+public delegate bool Filter<in TEntity>(object userContext, TEntity input)
+    where TEntity : class;
 
-    public delegate Task<bool> AsyncFilter<in TEntity>(object userContext, TEntity input)
-        where TEntity : class;
+public delegate Task<bool> AsyncFilter<in TEntity>(object userContext, TEntity input)
+    where TEntity : class;
 ```
-<sup><a href='/src/GraphQL.EntityFramework/Filters/Filters.cs#L8-L18' title='Snippet source file'>snippet source</a> | <a href='#snippet-filterssignature' title='Start of snippet'>anchor</a></sup>
+<sup><a href='/src/GraphQL.EntityFramework/Filters/Filters.cs#L8-L16' title='Snippet source file'>snippet source</a> | <a href='#snippet-filterssignature' title='Start of snippet'>anchor</a></sup>
 <!-- endSnippet -->
 
 

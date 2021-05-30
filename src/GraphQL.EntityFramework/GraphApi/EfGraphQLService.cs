@@ -35,6 +35,21 @@ namespace GraphQL.EntityFramework
             includeAppender = new(Navigations);
         }
 
+        /// <summary>
+        /// Injectable constructor.
+        ///
+        /// This constructor expects to receive all required dependencies either from the caller or more likely from the DI
+        /// container. For example, rather than expecting a function to resolve <see cref="Filters"/> it receives the filters
+        /// from the DI container, usually scoped. The same is true for the <see cref="TDbContext"/>.
+        /// </summary>
+        public EfGraphQLService
+        (
+            TDbContext dbContext,
+            Filters filters,
+            bool disableTracking = false
+        ) : this(resolveDbContext: _ => dbContext, model: dbContext.Model, resolveFilters: _ => filters, disableTracking: disableTracking)
+        {}
+
         public IReadOnlyDictionary<Type, IReadOnlyList<Navigation>> Navigations { get; }
 
         IncludeAppender includeAppender;
